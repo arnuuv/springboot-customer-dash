@@ -1,10 +1,10 @@
 package com.amigoscode.customer;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 @Repository("jdbc")
 public class CustomerJDBCDataAccessService implements CustomerDao {
@@ -143,5 +143,42 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
                 WHERE id = ?
                 """;
         jdbcTemplate.update(sql, profileImageId, customerId);
+    }
+
+    @Override
+    public List<Customer> searchCustomers(String name, String email, Integer minAge, Integer maxAge, Gender gender) {
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("SELECT id, name, email, password, age, gender, profile_image_id FROM customer WHERE 1=1");
+        
+        java.util.List<Object> params = new java.util.ArrayList<>();
+        
+        if (name != null && !name.trim().isEmpty()) {
+            sqlBuilder.append(" AND LOWER(name) LIKE LOWER(?)");
+            params.add("%" + name.trim() + "%");
+        }
+        
+        if (email != null && !email.trim().isEmpty()) {
+            sqlBuilder.append(" AND LOWER(email) LIKE LOWER(?)");
+            params.add("%" + email.trim() + "%");
+        }
+        
+        if (minAge != null) {
+            sqlBuilder.append(" AND age >= ?");
+            params.add(minAge);
+        }
+        
+        if (maxAge != null) {
+            sqlBuilder.append(" AND age <= ?");
+            params.add(maxAge);
+        }
+        
+        if (gender != null) {
+            sqlBuilder.append(" AND gender = ?");
+            params.add(gender.name());
+        }
+        
+        sqlBuilder.append(" ORDER BY name LIMIT 1000");
+        
+        return jdbcTemplate.query(sqlBuilder.toString(), customerRowMapper, params.toArray());
     }
 }

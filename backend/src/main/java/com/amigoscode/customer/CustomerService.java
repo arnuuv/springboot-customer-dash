@@ -169,5 +169,9 @@ public class CustomerService {
         .map(customerDTOMapper)
         .collect(Collectors.toList());
     }
+
+    public CustomerAnalyticsDTO getCustomerAnalytics() {
+        return customerDao.getCustomerAnalytics();
+    }
 }
 

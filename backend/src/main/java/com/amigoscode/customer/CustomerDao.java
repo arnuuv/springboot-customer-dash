@@ -14,4 +14,5 @@ public interface CustomerDao {
     Optional<Customer> selectUserByEmail(String email);
     List<Customer> searchCustomers(String name, String email, Integer minAge, Integer maxAge, Gender gender);
     void updateCustomerProfileImageId(String profileImageId, Integer customerId);
+    CustomerAnalyticsDTO getCustomerAnalytics();
 }

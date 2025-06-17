@@ -1,6 +1,7 @@
 package com.amigoscode.customer;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -180,5 +181,62 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
         sqlBuilder.append(" ORDER BY name LIMIT 1000");
         
         return jdbcTemplate.query(sqlBuilder.toString(), customerRowMapper, params.toArray());
+    }
+
+    @Override
+    public CustomerAnalyticsDTO getCustomerAnalytics() {
+        // Get total customers
+        String totalCustomersSql = "SELECT COUNT(*) FROM customer";
+        Long totalCustomers = jdbcTemplate.queryForObject(totalCustomersSql, Long.class);
+
+        // Get gender distribution
+        String genderDistributionSql = "SELECT gender, COUNT(*) FROM customer GROUP BY gender";
+        Map<String, Long> genderDistribution = new java.util.HashMap<>();
+        jdbcTemplate.query(genderDistributionSql, (rs, rowNum) -> {
+            genderDistribution.put(rs.getString("gender"), rs.getLong("count"));
+            return null;
+        });
+
+        // Get age distribution (grouped by decades)
+        String ageDistributionSql = """
+                SELECT 
+                    CASE 
+                        WHEN age < 20 THEN 'Under 20'
+                        WHEN age BETWEEN 20 AND 29 THEN '20-29'
+                        WHEN age BETWEEN 30 AND 39 THEN '30-39'
+                        WHEN age BETWEEN 40 AND 49 THEN '40-49'
+                        WHEN age >= 50 THEN '50+'
+                    END as age_group,
+                    COUNT(*) as count
+                FROM customer 
+                GROUP BY age_group
+                ORDER BY age_group
+                """;
+        Map<String, Long> ageDistribution = new java.util.HashMap<>();
+        jdbcTemplate.query(ageDistributionSql, (rs, rowNum) -> {
+            ageDistribution.put(rs.getString("age_group"), rs.getLong("count"));
+            return null;
+        });
+
+        // Get customers with profile images
+        String profileImagesSql = "SELECT COUNT(*) FROM customer WHERE profile_image_id IS NOT NULL";
+        Long customersWithProfileImages = jdbcTemplate.queryForObject(profileImagesSql, Long.class);
+
+        // Get average age
+        String averageAgeSql = "SELECT AVG(age) FROM customer";
+        Double averageAge = jdbcTemplate.queryForObject(averageAgeSql, Double.class);
+
+        // Get recent registrations (last 7 days - simplified to show recent customers)
+        String recentRegistrationsSql = "SELECT COUNT(*) FROM customer WHERE id > (SELECT MAX(id) - 5 FROM customer)";
+        Long recentRegistrations = jdbcTemplate.queryForObject(recentRegistrationsSql, Long.class);
+
+        return new CustomerAnalyticsDTO(
+                totalCustomers,
+                genderDistribution,
+                ageDistribution,
+                customersWithProfileImages,
+                averageAge,
+                Map.of("Recent", recentRegistrations)
+        );
     }
 }

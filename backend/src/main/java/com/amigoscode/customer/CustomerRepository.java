@@ -35,4 +35,19 @@ public interface CustomerRepository
             @Param("maxAge") Integer maxAge,
             @Param("gender") Gender gender
     );
+
+    @Query("SELECT COUNT(c) FROM Customer c")
+    Long countTotalCustomers();
+
+    @Query("SELECT c.gender, COUNT(c) FROM Customer c GROUP BY c.gender")
+    List<Object[]> getGenderDistribution();
+
+    @Query("SELECT COUNT(c) FROM Customer c WHERE c.profileImageId IS NOT NULL")
+    Long countCustomersWithProfileImages();
+
+    @Query("SELECT AVG(c.age) FROM Customer c")
+    Double getAverageAge();
+
+    @Query("SELECT COUNT(c) FROM Customer c WHERE c.id > (SELECT MAX(c2.id) - 5 FROM Customer c2)")
+    Long getRecentRegistrations();
 }

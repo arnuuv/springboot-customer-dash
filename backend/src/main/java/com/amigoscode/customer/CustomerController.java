@@ -90,4 +90,9 @@ public class CustomerController {
         return customerService.searchCustomers(searchRequest);
     }
 
+    @GetMapping("analytics")
+    public CustomerAnalyticsDTO getCustomerAnalytics() {
+        return customerService.getCustomerAnalytics();
+    }
+
 }

@@ -9,6 +9,8 @@ import Signup from "./components/signup/Signup";
 import AuthProvider from "./components/context/AuthContext.jsx";
 import ProtectedRoute from "./components/shared/ProtectedRoute.jsx";
 import CustomerAnalytics from "./components/analytics/CustomerAnalytics.jsx";
+import CustomerExportImport from "./components/export-import/CustomerExportImport.jsx";
+import CustomerActivityTimeline from "./components/activity/CustomerActivityTimeline.jsx";
 import './index.css'
 import Home from "./Home.jsx";
 
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
     {
         path: "dashboard/analytics",
         element: <ProtectedRoute><CustomerAnalytics /></ProtectedRoute>
+    },
+    {
+        path: "dashboard/export-import",
+        element: <ProtectedRoute><CustomerExportImport /></ProtectedRoute>
+    },
+    {
+        path: "dashboard/activities",
+        element: <ProtectedRoute><CustomerActivityTimeline /></ProtectedRoute>
     }
 ])
 

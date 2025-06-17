@@ -29,7 +29,9 @@ import {
     FiMenu,
     FiSettings,
     FiUsers,
-    FiBarChart3
+    FiBarChart3,
+    FiDownload,
+    FiActivity
 } from 'react-icons/fi';
 import {useAuth} from "../context/AuthContext.jsx";
 
@@ -37,6 +39,8 @@ const LinkItems = [
     {name: 'Home', route: '/dashboard', icon: FiHome},
     {name: 'Customers', route: '/dashboard/customers',  icon: FiUsers},
     {name: 'Analytics', route: '/dashboard/analytics', icon: FiBarChart3},
+    {name: 'Export/Import', route: '/dashboard/export-import', icon: FiDownload},
+    {name: 'Activities', route: '/dashboard/activities', icon: FiActivity},
     {name: 'Settings', route: '/dashboard/settings', icon: FiSettings},
 ];
 

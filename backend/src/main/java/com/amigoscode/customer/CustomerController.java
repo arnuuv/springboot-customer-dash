@@ -25,13 +25,16 @@ public class CustomerController {
     private final CustomerService customerService;
     private final JWTUtil jwtUtil;
     private final CustomerExportImportService exportImportService;
+    private final CustomerActivityService activityService;
 
     public CustomerController(CustomerService customerService,
                               JWTUtil jwtUtil,
-                              CustomerExportImportService exportImportService) {
+                              CustomerExportImportService exportImportService,
+                              CustomerActivityService activityService) {
         this.customerService = customerService;
         this.jwtUtil = jwtUtil;
         this.exportImportService = exportImportService;
+        this.activityService = activityService;
     }
 
     @GetMapping
@@ -112,6 +115,23 @@ public class CustomerController {
     public CustomerExportImportService.ImportResult importCustomersFromCSV(
             @RequestParam("file") MultipartFile file) {
         return exportImportService.importCustomersFromCSV(file);
+    }
+
+    @GetMapping("activities")
+    public List<CustomerActivity> getAllActivities() {
+        return activityService.getAllActivities();
+    }
+
+    @GetMapping("{customerId}/activities")
+    public List<CustomerActivity> getCustomerActivities(
+            @PathVariable("customerId") Integer customerId) {
+        return activityService.getCustomerActivities(customerId);
+    }
+
+    @GetMapping("activities/recent")
+    public List<CustomerActivity> getRecentActivities(
+            @RequestParam(defaultValue = "7") int days) {
+        return activityService.getRecentActivities(days);
     }
 
 }

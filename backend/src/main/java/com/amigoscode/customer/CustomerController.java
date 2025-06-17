@@ -24,11 +24,14 @@ public class CustomerController {
 
     private final CustomerService customerService;
     private final JWTUtil jwtUtil;
+    private final CustomerExportImportService exportImportService;
 
     public CustomerController(CustomerService customerService,
-                              JWTUtil jwtUtil) {
+                              JWTUtil jwtUtil,
+                              CustomerExportImportService exportImportService) {
         this.customerService = customerService;
         this.jwtUtil = jwtUtil;
+        this.exportImportService = exportImportService;
     }
 
     @GetMapping
@@ -93,6 +96,22 @@ public class CustomerController {
     @GetMapping("analytics")
     public CustomerAnalyticsDTO getCustomerAnalytics() {
         return customerService.getCustomerAnalytics();
+    }
+
+    @GetMapping("export/csv")
+    public ResponseEntity<byte[]> exportCustomersToCSV() {
+        byte[] csvData = exportImportService.exportCustomersToCSV();
+        
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"customers.csv\"")
+                .header(HttpHeaders.CONTENT_TYPE, "text/csv")
+                .body(csvData);
+    }
+
+    @PostMapping("import/csv")
+    public CustomerExportImportService.ImportResult importCustomersFromCSV(
+            @RequestParam("file") MultipartFile file) {
+        return exportImportService.importCustomersFromCSV(file);
     }
 
 }

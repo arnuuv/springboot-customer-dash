@@ -8,6 +8,7 @@ import Login from "./components/login/Login.jsx";
 import Signup from "./components/signup/Signup";
 import AuthProvider from "./components/context/AuthContext.jsx";
 import ProtectedRoute from "./components/shared/ProtectedRoute.jsx";
+import CustomerAnalytics from "./components/analytics/CustomerAnalytics.jsx";
 import './index.css'
 import Home from "./Home.jsx";
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     {
         path: "dashboard/customers",
         element: <ProtectedRoute><Customer /></ProtectedRoute>
+    },
+    {
+        path: "dashboard/analytics",
+        element: <ProtectedRoute><CustomerAnalytics /></ProtectedRoute>
     }
 ])
 

@@ -28,13 +28,15 @@ import {
     FiHome,
     FiMenu,
     FiSettings,
-    FiUsers
+    FiUsers,
+    FiBarChart3
 } from 'react-icons/fi';
 import {useAuth} from "../context/AuthContext.jsx";
 
 const LinkItems = [
     {name: 'Home', route: '/dashboard', icon: FiHome},
     {name: 'Customers', route: '/dashboard/customers',  icon: FiUsers},
+    {name: 'Analytics', route: '/dashboard/analytics', icon: FiBarChart3},
     {name: 'Settings', route: '/dashboard/settings', icon: FiSettings},
 ];
 

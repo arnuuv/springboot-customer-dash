@@ -1,20 +1,21 @@
 package com.amigoscode.customer;
 
-import com.amigoscode.exception.DuplicateResourceException;
-import com.amigoscode.exception.RequestValidationException;
-import com.amigoscode.exception.ResourceNotFoundException;
-import com.amigoscode.s3.S3Buckets;
-import com.amigoscode.s3.S3Service;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import com.amigoscode.exception.DuplicateResourceException;
+import com.amigoscode.exception.RequestValidationException;
+import com.amigoscode.exception.ResourceNotFoundException;
+import com.amigoscode.s3.S3Buckets;
+import com.amigoscode.s3.S3Service;
 
 @Service
 public class CustomerService {
@@ -155,6 +156,18 @@ public class CustomerService {
                 "profile-images/%s/%s".formatted(customerId, customer.profileImageId())
         );
         return profileImage;
+    }
+
+    public List<CustomerDTO> searchCustomers(CustomerSearchRequest searchRequest) {
+        return customerDao.searchCustomers(
+                searchRequest.name(),
+                searchRequest.email(),
+                searchRequest.minAge(),
+                searchRequest.maxAge(),
+                searchRequest.gender()
+        ).stream()
+        .map(customerDTOMapper)
+        .collect(Collectors.toList());
     }
 }
 

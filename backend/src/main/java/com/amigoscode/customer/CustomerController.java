@@ -26,15 +26,18 @@ public class CustomerController {
     private final JWTUtil jwtUtil;
     private final CustomerExportImportService exportImportService;
     private final CustomerActivityService activityService;
+    private final CustomerNotificationService notificationService;
 
     public CustomerController(CustomerService customerService,
                               JWTUtil jwtUtil,
                               CustomerExportImportService exportImportService,
-                              CustomerActivityService activityService) {
+                              CustomerActivityService activityService,
+                              CustomerNotificationService notificationService) {
         this.customerService = customerService;
         this.jwtUtil = jwtUtil;
         this.exportImportService = exportImportService;
         this.activityService = activityService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping
@@ -132,6 +135,50 @@ public class CustomerController {
     public List<CustomerActivity> getRecentActivities(
             @RequestParam(defaultValue = "7") int days) {
         return activityService.getRecentActivities(days);
+    }
+
+    // Notification endpoints
+    @GetMapping("{customerId}/notifications")
+    public List<CustomerNotification> getCustomerNotifications(
+            @PathVariable("customerId") Integer customerId) {
+        return notificationService.getCustomerNotifications(customerId);
+    }
+
+    @GetMapping("{customerId}/notifications/unread")
+    public List<CustomerNotification> getUnreadNotifications(
+            @PathVariable("customerId") Integer customerId) {
+        return notificationService.getUnreadNotifications(customerId);
+    }
+
+    @GetMapping("{customerId}/notifications/count")
+    public Long getUnreadNotificationCount(
+            @PathVariable("customerId") Integer customerId) {
+        return notificationService.getUnreadCount(customerId);
+    }
+
+    @PutMapping("notifications/{notificationId}/read")
+    public void markNotificationAsRead(@PathVariable("notificationId") Long notificationId) {
+        notificationService.markAsRead(notificationId);
+    }
+
+    @PutMapping("{customerId}/notifications/read-all")
+    public void markAllNotificationsAsRead(@PathVariable("customerId") Integer customerId) {
+        notificationService.markAllAsRead(customerId);
+    }
+
+    @DeleteMapping("notifications/{notificationId}")
+    public void deleteNotification(@PathVariable("notificationId") Long notificationId) {
+        notificationService.deleteNotification(notificationId);
+    }
+
+    @PostMapping("notifications/bulk")
+    public void sendBulkNotification(@RequestBody BulkNotificationRequest request) {
+        notificationService.sendBulkNotification(request.customerIds(), request.title(), request.message(), request.priority());
+    }
+
+    @PostMapping("notifications/system")
+    public void sendSystemNotification(@RequestBody SystemNotificationRequest request) {
+        notificationService.sendSystemNotification(request.title(), request.message(), request.priority());
     }
 
 }

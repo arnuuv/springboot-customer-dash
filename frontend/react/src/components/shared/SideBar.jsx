@@ -34,14 +34,22 @@ import {
     FiActivity
 } from 'react-icons/fi';
 import {useAuth} from "../context/AuthContext.jsx";
+import { Home, Users, Download, Upload, Activity, Bell, LogOut } from 'lucide-react';
 
 const LinkItems = [
-    {name: 'Home', route: '/dashboard', icon: FiHome},
-    {name: 'Customers', route: '/dashboard/customers',  icon: FiUsers},
-    {name: 'Analytics', route: '/dashboard/analytics', icon: FiBarChart3},
-    {name: 'Export/Import', route: '/dashboard/export-import', icon: FiDownload},
-    {name: 'Activities', route: '/dashboard/activities', icon: FiActivity},
-    {name: 'Settings', route: '/dashboard/settings', icon: FiSettings},
+    {name: 'Home', route: '/', icon: FiHome},
+    {name: 'Customers', route: '/customers',  icon: FiUsers},
+    {name: 'Export/Import', route: '/export-import', icon: FiDownload},
+    {name: 'Activities', route: '/activities', icon: FiActivity},
+    {name: 'Notifications', route: '/notifications', icon: FiBell},
+];
+
+const menuItems = [
+    { icon: Home, label: 'Dashboard', path: '/' },
+    { icon: Users, label: 'Customers', path: '/customers' },
+    { icon: Download, label: 'Export/Import', path: '/export-import' },
+    { icon: Activity, label: 'Activity Log', path: '/activities' },
+    { icon: Bell, label: 'Notifications', path: '/notifications' }
 ];
 
 export default function SidebarWithHeader({children}) {

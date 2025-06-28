@@ -1,0 +1,374 @@
+.notification-center {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  overflow: hidden;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.notification-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.notification-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.customer-select {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 14px;
+  min-width: 200px;
+}
+
+.customer-select option {
+  background: white;
+  color: #333;
+}
+
+.notification-toggle {
+  position: relative;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.notification-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ef4444;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.notification-panel {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.notification-actions {
+  display: flex;
+  gap: 10px;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #3b82f6;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.action-btn.small {
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+.action-btn.delete {
+  background: #ef4444;
+}
+
+.action-btn.delete:hover {
+  background: #dc2626;
+}
+
+.notifications-list {
+  padding: 20px;
+}
+
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  border-left: 4px solid #3b82f6;
+  transition: all 0.3s ease;
+}
+
+.notification-item:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.notification-item.unread {
+  background: #fef3c7;
+  border-color: #f59e0b;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.notification-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.notification-type {
+  background: #e5e7eb;
+  color: #6b7280;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.notification-message {
+  margin: 8px 0;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.notification-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.notification-priority {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.priority-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.priority-icon.urgent {
+  color: #dc2626;
+}
+
+.priority-icon.high {
+  color: #ea580c;
+}
+
+.priority-icon.normal {
+  color: #2563eb;
+}
+
+.priority-icon.low {
+  color: #059669;
+}
+
+.no-notifications {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+}
+
+.no-notifications-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+.bulk-notification-form {
+  padding: 20px;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.bulk-notification-form h3 {
+  margin: 0 0 20px 0;
+  color: #1f2937;
+  font-size: 18px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.customer-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 10px;
+  background: white;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.checkbox-label:hover {
+  background: #f3f4f6;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.send-btn {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.send-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .notification-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .notification-controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .customer-select {
+    min-width: 150px;
+  }
+
+  .notification-actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    justify-content: center;
+  }
+
+  .customer-checkboxes {
+    grid-template-columns: 1fr;
+  }
+
+  .notification-item {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .notification-actions {
+    align-self: flex-end;
+  }
+}
